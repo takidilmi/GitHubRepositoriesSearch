@@ -1,26 +1,17 @@
-// const GITHUB_API_URL = 'https://api.github.com';
-
-// async function getRepositories(user) {
-//     const response = await fetch(`${GITHUB_API_URL}/users/${user}/repos`);
-//     const data = await response.json();
-//     return data;
-// }
-
-// getRepositories('takidilmi')
-//     .then(repos => {
-//         // Do something with the repositories
-//         console.log(repos);
-//     })
-//     .catch(error => {
-//         // Handle the error
-//         console.error('Error:', error);
-//     });
-
 const GITHUB_API_URL = "https://api.github.com";
 
 async function getRepositories(user, callback) {
+  // loader
+  const userDiv = document.getElementById("user");
+  userDiv.innerHTML = '<div class="loader">Loading...</div>';
+
   const response = await fetch(`${GITHUB_API_URL}/users/${user}`);
   const data = await response.json();
+  if (data.message === 'Not Found') {
+    const userDiv = document.getElementById("user");
+    userDiv.innerHTML = '<p style="color: red;">No such user found.</p>';
+    return;
+  }
 
   const reposResponse = await fetch(`${GITHUB_API_URL}/users/${user}/repos`);
   const reposData = await reposResponse.json();
