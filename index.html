@@ -2,9 +2,31 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <!-- import Bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
   </head>
   <body>
-    <script src="js/script.js"></script>
+    <div class="d-flex justify-content-around">
+      <div class="d-flex flex-column w-100 align-items-center">
+        <h1>GitHub Repositories Search</h1>
+        <form id="search-form" class="form-inline my-2 my-lg-0">
+          <input
+            class="form-control mr-sm-2"
+            type="text"
+            id="username"
+            placeholder="Enter GitHub username" />
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            Search
+          </button>
+        </form>
+      </div>
+      <div id="user" class="mt-5"></div>
+      <div id="repos" class="mt-5"></div>
+    </div>
+
     <script src="js/github-api.js"></script>
+    <script src="js/script.js"></script>
   </body>
 </html>
