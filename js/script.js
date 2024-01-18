@@ -7,8 +7,28 @@ document
       const userDiv = document.getElementById("user");
       userDiv.innerHTML = `
             <div class="d-flex w-75 align-items-center justify-content-around">
-            <img class="img-thumbnail rounded-4 w-50" src="${user.avatar_url}" alt="${user.name}'s avatar">
-            <h2>${user.name}</h2>
+                <div class="d-flex justify-content-center align-items-center flex-column mb-3">
+                    <a href="${
+                      user.html_url
+                    }" target="_blank">GitHub Profile</a>
+                    <img class="img-thumbnail rounded-4 w-50" src="${
+                      user.avatar_url
+                        ? user.avatar_url
+                        : "../assets/images/avatar.jpg"
+                    }" alt="${user.name}'s avatar">
+                    ${
+                      user.blog
+                        ? `<a href="${user.blog}" target="_blank">${user.blog}</a>`
+                        : ""
+                    }
+                </div>
+                <div>
+                    <h2>${user.name ? user.name : "Github User"}</h2>
+                    <p><i class="fas fa-map-marker-alt"></i> ${
+                      user.location ? user.location : "Unknown"
+                    }</p>
+                    <p>${user.bio ? user.bio : "No Description Provided"}</p>
+                </div>
             </div>
         `;
 
