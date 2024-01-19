@@ -2,6 +2,7 @@ let currentPage = 1;
 const perPage = 10;
 let currentUsername = "";
 
+// Manipulating the DOM to display the user data
 function displayUser(user) {
   const userDiv = document.getElementById("user");
   userDiv.innerHTML = `
@@ -27,6 +28,7 @@ function displayUser(user) {
 </div>
   `;
 }
+// Manipulating the DOM to display the repository data
 function displayRepos(repos, totalRepos) {
   const reposDiv = document.getElementById("repos");
   const pageNumbersDiv = document.getElementById("page-numbers");
@@ -36,12 +38,12 @@ function displayRepos(repos, totalRepos) {
     reposDiv.innerHTML = '<p style="color: red;">No Repository Was Found</p>';
     return;
   }
-  repos.forEach(function (repo) {
+  for (const repo of repos) {
     const div = document.createElement("div");
     div.className = "col-sm-6";
     div.innerHTML = `
       <div class="card p-2 h-100">
-        <h5 class="card-title">${repo.name}</h5>
+        <h5 class="card-title text-primary">${repo.name}</h5>
         <p class="card-text">${
           repo.description ? repo.description : "No Description Was Provided"
         }</p>
@@ -55,39 +57,51 @@ function displayRepos(repos, totalRepos) {
       </div>
     `;
     reposDiv.appendChild(div);
-  });
-
+  }
   const totalPages = Math.ceil(totalRepos / perPage);
-  // Show or hide the "Next" and "Previous" buttons
   const prevPageButton = document.getElementById("prev-page");
   const nextPageButton = document.getElementById("next-page");
-  if (totalPages > 1) {
-    prevPageButton.style.display = "block";
-    nextPageButton.style.display = "block";
-  } else {
-    prevPageButton.style.display = "none";
-    nextPageButton.style.display = "none";
-  }
+  prevPageButton.style.display = totalPages > 1 ? "block" : "none";
+  nextPageButton.style.display = totalPages > 1 ? "block" : "none";
   for (let i = 1; i <= totalPages; i++) {
     const button = document.createElement("button");
     button.innerText = i;
     button.className = "btn btn-outline-primary me-2";
-    button.addEventListener("click", function () {
+    button.addEventListener("click", () => {
       currentPage = i;
       getRepositories(currentUsername, currentPage, perPage, displayRepos);
     });
     pageNumbersDiv.appendChild(button);
+  }
+
+  // Remove the 'bg-primary' class from all page number buttons
+  const pageNumberButtons = document.querySelectorAll("#page-numbers button");
+  pageNumberButtons.forEach((button) => {
+    button.classList.remove("bg-primary");
+    button.classList.add("btn-outline-primary"); // Add the original color back
+  });
+
+  // Add the 'bg-primary' class to the current page number button
+  const currentPageButton = document.querySelector(
+    `#page-numbers button:nth-child(${currentPage})`
+  );
+  if (currentPageButton) {
+    currentPageButton.classList.remove("btn-outline-primary"); // Remove the original color
+    currentPageButton.classList.add("bg-primary");
   }
 }
 
 document
   .getElementById("search-form")
   .addEventListener("submit", function (event) {
+    // Stops the browser's default form submission process
     event.preventDefault();
+    // Get username from input field
     currentUsername = document.getElementById("username").value;
     // Clear previous user's information
     const reposDiv = document.getElementById("repos");
     reposDiv.innerHTML = "";
+    // Fetch and display user and repository data
     getUser(currentUsername, displayUser);
     getRepositories(currentUsername, currentPage, perPage, displayRepos);
   });
