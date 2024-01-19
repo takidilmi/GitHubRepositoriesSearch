@@ -2,6 +2,26 @@ let currentPage = 1;
 let perPage = 10;
 let currentUsername = "";
 
+// Get the input field and search button
+const inputField = document.getElementById("username");
+const searchButton = document.querySelector("#search-form button");
+
+// Add an input event listener to the input field
+inputField.addEventListener("input", function () {
+  // If the input value length is less than 2, disable the search button and change the cursor style
+  if (inputField.value.length < 2) {
+    searchButton.disabled = true;
+    searchButton.style.cursor = "not-allowed";
+  } else {
+    // Otherwise, enable the search button and change the cursor style back to default
+    searchButton.disabled = false;
+    searchButton.style.cursor = "pointer";
+  }
+});
+
+// Call the event listener once at the start to initialize the button state
+inputField.dispatchEvent(new Event("input"));
+
 // Manipulating the DOM to display the user data
 function displayUser(user) {
   const userDiv = document.getElementById("user");
