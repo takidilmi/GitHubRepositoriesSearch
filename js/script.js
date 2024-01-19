@@ -1,6 +1,6 @@
 let currentPage = 1;
 const perPage = 10;
-let currentUsername = '';
+let currentUsername = "";
 
 function displayUser(user) {
   const userDiv = document.getElementById("user");
@@ -27,8 +27,10 @@ function displayUser(user) {
 </div>
   `;
 }
-function displayRepos(repos) {
+function displayRepos(repos, totalRepos) {
   const reposDiv = document.getElementById("repos");
+  const pageNumbersDiv = document.getElementById("page-numbers");
+  pageNumbersDiv.innerHTML = "";
   reposDiv.innerHTML = "";
   if (repos.length === 0) {
     reposDiv.innerHTML = '<p style="color: red;">No Repository Was Found</p>';
@@ -54,6 +56,28 @@ function displayRepos(repos) {
     `;
     reposDiv.appendChild(div);
   });
+
+  const totalPages = Math.ceil(totalRepos / perPage);
+  // Show or hide the "Next" and "Previous" buttons
+  const prevPageButton = document.getElementById("prev-page");
+  const nextPageButton = document.getElementById("next-page");
+  if (totalPages > 1) {
+    prevPageButton.style.display = "block";
+    nextPageButton.style.display = "block";
+  } else {
+    prevPageButton.style.display = "none";
+    nextPageButton.style.display = "none";
+  }
+  for (let i = 1; i <= totalPages; i++) {
+    const button = document.createElement("button");
+    button.innerText = i;
+    button.className = "btn btn-outline-primary me-2";
+    button.addEventListener("click", function () {
+      currentPage = i;
+      getRepositories(currentUsername, currentPage, perPage, displayRepos);
+    });
+    pageNumbersDiv.appendChild(button);
+  }
 }
 
 document
@@ -80,8 +104,11 @@ async function getRepositories(user, page, perPage, callback) {
     const languagesData = await languagesResponse.json();
     repo.languages = Object.keys(languagesData);
   }
+  const totalReposResponse = await fetch(`${GITHUB_API_URL}/users/${user}`);
+  const totalReposData = await totalReposResponse.json();
+  const totalRepos = totalReposData.public_repos;
 
-  callback(reposData);
+  callback(reposData, totalRepos);
 }
 
 document.getElementById("prev-page").addEventListener("click", function () {
