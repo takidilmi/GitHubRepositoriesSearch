@@ -15,7 +15,7 @@
   </head>
   <body>
     <div
-      style="height: 100vh;"
+      style="height: 100vh"
       class="container d-flex flex-column justify-content-center align-items-center">
       <h1 class="text-center my-4">GitHub Repositories Search</h1>
       <form id="search-form" class="d-flex justify-content-center my-4">
@@ -29,8 +29,16 @@
         </button>
       </form>
       <div id="user" class="text-center my-4"></div>
+      <input
+        id="repo-search"
+        class="form-control mb-2 me-2"
+        type="text"
+        placeholder="Search repositories"
+        style="display: none" />
       <div id="repos" class="row g-3"></div>
-      <div id="pagination" class="d-flex align-items-center justify-content-center pb-3 my-4">
+      <div
+        id="pagination"
+        class="d-flex align-items-center justify-content-center pb-3 my-4">
         <button
           id="prev-page"
           style="display: none"

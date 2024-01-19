@@ -104,6 +104,28 @@ document
     // Fetch and display user and repository data
     getUser(currentUsername, displayUser);
     getRepositories(currentUsername, currentPage, perPage, displayRepos);
+    document.getElementById("repo-search").style.display = "block";
+    document
+      .getElementById("repo-search")
+      .addEventListener("input", function (event) {
+        // Get the search term
+        const searchTerm = event.target.value.toLowerCase();
+
+        // Get all the repository cards
+        const repoCards = document.querySelectorAll("#repos .card");
+
+        // Loop through the repository cards and hide those that don't match the search term
+        repoCards.forEach((card) => {
+          const repoName = card
+            .querySelector(".card-title")
+            .textContent.toLowerCase();
+          if (repoName.includes(searchTerm)) {
+            card.parentElement.style.display = "block";
+          } else {
+            card.parentElement.style.display = "none";
+          }
+        });
+      });
   });
 
 async function getRepositories(user, page, perPage, callback) {
