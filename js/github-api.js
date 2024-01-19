@@ -1,18 +1,18 @@
 const GITHUB_API_URL = "https://api.github.com";
 
-async function getRepositories(user, page, perPage, callback) {
-  // loader
-  const userDiv = document.getElementById("user");
-  userDiv.innerHTML = '<div class="loader">Loading...</div>';
-
+async function getUser(user, callback) {
   const response = await fetch(`${GITHUB_API_URL}/users/${user}`);
   const data = await response.json();
+
   if (data.message === "Not Found") {
     const userDiv = document.getElementById("user");
     userDiv.innerHTML = '<p style="color: red;">No such user found.</p>';
     return;
   }
 
+  callback(data);
+}
+async function getRepositories(user, page, perPage, callback) {
   const reposResponse = await fetch(
     `${GITHUB_API_URL}/users/${user}/repos?page=${page}&per_page=${perPage}`
   );
@@ -25,5 +25,5 @@ async function getRepositories(user, page, perPage, callback) {
     repo.languages = Object.keys(languagesData);
   }
 
-  callback(data, reposData);
+  callback(reposData);
 }
