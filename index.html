@@ -28,18 +28,16 @@
     </select>
     <div
       class="container d-flex flex-column justify-content-center align-items-center">
-      <h1 class="text-center my-4">GitHub Repositories Search</h1>
+      <a href="/">
+        <h1 class="text-decorating my-4">GitHub Repositories Search</h1>
+      </a>
       <form id="search-form" class="d-flex justify-content-center my-4">
         <input
           class="form-control me-2"
           type="text"
           id="username"
           placeholder="Enter GitHub username" />
-        <button
-          class="btn-custom  my-2 my-sm-0"
-          type="submit">
-          Search
-        </button>
+        <button class="btn-custom my-2 my-sm-0" type="submit">Search</button>
       </form>
       <div id="user" class="text-center my-4"></div>
       <input
@@ -79,5 +77,19 @@
     </div>
     <script src="js/github-api.js"></script>
     <script src="js/script.js"></script>
+    <script>
+      window.onload = function () {
+        const validRoutes = ["/", "/known-route-1", "/known-route-2"];
+        if (!validRoutes.includes(window.location.pathname)) {
+          // Display your 404 image
+          document.body.innerHTML =
+            '<img src="/assets/images/avatar.jpg" alt="404 Image" />';
+          // After 3 seconds, redirect to the homepage
+          setTimeout(function () {
+            window.location.href = "/";
+          }, 3000);
+        }
+      };
+    </script>
   </body>
 </html>

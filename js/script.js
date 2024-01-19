@@ -18,6 +18,15 @@ inputField.addEventListener("input", function () {
     searchButton.style.cursor = "pointer";
   }
 });
+// clear pagination after a new search
+function clearPagination() {
+  const pageNumbersDiv = document.getElementById("page-numbers");
+  const prevPageButton = document.getElementById("prev-page");
+  const nextPageButton = document.getElementById("next-page");
+  pageNumbersDiv.innerHTML = "";
+  prevPageButton.style.display = "none";
+  nextPageButton.style.display = "none";
+}
 
 // Call the event listener once at the start to initialize the button state
 inputField.dispatchEvent(new Event("input"));
@@ -121,6 +130,8 @@ document
     // Clear previous user's information
     const reposDiv = document.getElementById("repos");
     reposDiv.innerHTML = "";
+    // Clear pagination
+    clearPagination();
     // Fetch and display user and repository data
     getUser(currentUsername, displayUser);
     getRepositories(currentUsername, currentPage, perPage, displayRepos);

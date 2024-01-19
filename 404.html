@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body style="background-color: white; text-align: center; padding-top: 20%;">
+  <h1 style="color: red;">Page Not Found</h1>
+  <p>You will be redirected to the homepage in <span id="countdown">5</span> seconds.</p>
+  <script>
+    var countdown = 5;
+    var countdownElement = document.getElementById('countdown');
+
+    var timer = setInterval(function() {
+      countdown--;
+      countdownElement.textContent = countdown;
+
+      if (countdown <= 0) {
+        clearInterval(timer);
+        window.location.href = '/';
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
