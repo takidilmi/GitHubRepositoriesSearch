@@ -21,6 +21,8 @@ async function getUser(user, callback) {
 }
 
 async function getRepositories(user, page, perPage, callback) {
+  const loader = document.getElementById("loader");
+  loader.style.display = "block";
   try {
     const reposResponse = await fetch(
       `${GITHUB_API_URL}/users/${user}/repos?page=${page}&per_page=${perPage}`
@@ -52,6 +54,7 @@ async function getRepositories(user, page, perPage, callback) {
       "An error occurred while fetching the repositories. Please try again."
     );
   }
+  loader.style.display = "none";
 }
 
 function displayError(message) {

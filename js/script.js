@@ -1,5 +1,5 @@
 let currentPage = 1;
-const perPage = 10;
+let perPage = 10;
 let currentUsername = "";
 
 // Manipulating the DOM to display the user data
@@ -128,42 +128,6 @@ document
       });
   });
 
-// async function getRepositories(user, page, perPage, callback) {
-//   try {
-//     const reposResponse = await fetch(
-//       `${GITHUB_API_URL}/users/${user}/repos?page=${page}&per_page=${perPage}`
-//     );
-
-//     // Check if rate limit has been exceeded
-//     if (reposResponse.status === 403) {
-//       displayError("GitHub API rate limit exceeded. Please try again later.");
-//       return;
-//     }
-
-//     let reposData = await reposResponse.json();
-
-//     // Sort repositories by name
-//     reposData = reposData.sort((a, b) => a.name.localeCompare(b.name));
-
-//     for (let i = 0; i < reposData.length; i++) {
-//       const repo = reposData[i];
-//       const languagesResponse = await fetch(repo.languages_url);
-//       const languagesData = await languagesResponse.json();
-//       repo.languages = Object.keys(languagesData);
-//     }
-
-//     const totalReposResponse = await fetch(`${GITHUB_API_URL}/users/${user}`);
-//     const totalReposData = await totalReposResponse.json();
-//     const totalRepos = totalReposData.public_repos;
-
-//     callback(reposData, totalRepos);
-//   } catch (error) {
-//     displayError(
-//       "An error occurred while fetching the repositories. Please try again."
-//     );
-//   }
-// }
-
 document.getElementById("prev-page").addEventListener("click", function () {
   if (currentPage > 1) {
     currentPage--;
@@ -175,3 +139,9 @@ document.getElementById("next-page").addEventListener("click", function () {
   currentPage++;
   getRepositories(currentUsername, currentPage, perPage, displayRepos);
 });
+
+function updatePerPage() {
+  perPage = document.getElementById("perPage").value;
+  currentPage = 1;
+  getRepositories(currentUsername, currentPage, perPage, displayRepos);
+}
