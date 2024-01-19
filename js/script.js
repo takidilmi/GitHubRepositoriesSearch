@@ -129,22 +129,39 @@ document
   });
 
 async function getRepositories(user, page, perPage, callback) {
-  const reposResponse = await fetch(
-    `${GITHUB_API_URL}/users/${user}/repos?page=${page}&per_page=${perPage}`
-  );
-  const reposData = await reposResponse.json();
+  try {
+    const reposResponse = await fetch(
+      `${GITHUB_API_URL}/users/${user}/repos?page=${page}&per_page=${perPage}`
+    );
 
-  for (let i = 0; i < reposData.length; i++) {
-    const repo = reposData[i];
-    const languagesResponse = await fetch(repo.languages_url);
-    const languagesData = await languagesResponse.json();
-    repo.languages = Object.keys(languagesData);
+    // Check if rate limit has been exceeded
+    if (reposResponse.status === 403) {
+      displayError("GitHub API rate limit exceeded. Please try again later.");
+      return;
+    }
+
+    let reposData = await reposResponse.json();
+
+    // Sort repositories by name
+    reposData = reposData.sort((a, b) => a.name.localeCompare(b.name));
+
+    for (let i = 0; i < reposData.length; i++) {
+      const repo = reposData[i];
+      const languagesResponse = await fetch(repo.languages_url);
+      const languagesData = await languagesResponse.json();
+      repo.languages = Object.keys(languagesData);
+    }
+
+    const totalReposResponse = await fetch(`${GITHUB_API_URL}/users/${user}`);
+    const totalReposData = await totalReposResponse.json();
+    const totalRepos = totalReposData.public_repos;
+
+    callback(reposData, totalRepos);
+  } catch (error) {
+    displayError(
+      "An error occurred while fetching the repositories. Please try again."
+    );
   }
-  const totalReposResponse = await fetch(`${GITHUB_API_URL}/users/${user}`);
-  const totalReposData = await totalReposResponse.json();
-  const totalRepos = totalReposData.public_repos;
-
-  callback(reposData, totalRepos);
 }
 
 document.getElementById("prev-page").addEventListener("click", function () {
