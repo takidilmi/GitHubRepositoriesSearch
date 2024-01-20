@@ -22,6 +22,28 @@ You can view a live demo of the application [here](https://git-hub-repositories-
 1. Clone the repository to your local machine.
 2. Open the `index.html` file in your browser.
 
+## Running the Application Locally
+1. Install `http-server` globally on your machine using npm (Node.js package manager):
+```bash
+npm install --global http-server
+```
+2. Create a `http-server.json` configuration file in your project root:
+```json
+{
+  "root": "./",
+  "rewrites": [
+    { "from": "/^((?!api).)*$/", "to": "/404.html" }
+  ]
+}
+```
+This configuration will rewrite all routes except those starting with `/api` to `404.html`.
+3. Navigate to your project directory and start the server:
+```bash
+cd path/to/your/project
+http-server --config http-server.json
+```
+By default, `http-server` will start the server on port 8080. You can access your application at `http://localhost:8080`.
+
 ## Usage
 1. Enter a GitHub username in the input field and click the "Search" button.
 2. The application will display the user's public repositories.
