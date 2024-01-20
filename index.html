@@ -14,18 +14,6 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   </head>
   <body>
-    <select id="perPage" onchange="updatePerPage()" class="select-position">
-      <option value="10">10</option>
-      <option value="20">20</option>
-      <option value="30">30</option>
-      <option value="40">40</option>
-      <option value="50">50</option>
-      <option value="60">60</option>
-      <option value="70">70</option>
-      <option value="80">80</option>
-      <option value="90">90</option>
-      <option value="100">100</option>
-    </select>
     <div
       class="container d-flex flex-column justify-content-center align-items-center">
       <a href="/">
@@ -40,12 +28,34 @@
         <button class="btn-custom my-2 my-sm-0" type="submit">Search</button>
       </form>
       <div id="user" class="text-center my-4"></div>
-      <input
-        id="repo-search"
-        class="form-control mb-2 me-2"
-        type="text"
-        placeholder="Search repositories"
-        style="display: none" />
+
+      <div
+        class="d-flex flex-column mb-2 justify-content-center align-items-center">
+        <input
+          id="repo-search"
+          class="form-control mb-2 me-2"
+          type="text"
+          placeholder="Search repositories"
+          style="display: none" />
+        <div
+          id="perPageDiv"
+          class="justify-content-center align-items-center"
+          style="display: none">
+          <p class="mb-0 me-2">Repositories Per Page</p>
+          <select id="perPage" onchange="updatePerPage()" class="ml-2">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+            <option value="60">60</option>
+            <option value="70">70</option>
+            <option value="80">80</option>
+            <option value="90">90</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+      </div>
       <div id="repos" class="row g-3"></div>
       <div
         id="loader"
@@ -77,19 +87,5 @@
     </div>
     <script src="js/github-api.js"></script>
     <script src="js/script.js"></script>
-    <script>
-      window.onload = function () {
-        const validRoutes = ["/", "/known-route-1", "/known-route-2"];
-        if (!validRoutes.includes(window.location.pathname)) {
-          // Display your 404 image
-          document.body.innerHTML =
-            '<img src="/assets/images/avatar.jpg" alt="404 Image" />';
-          // After 3 seconds, redirect to the homepage
-          setTimeout(function () {
-            window.location.href = "/";
-          }, 3000);
-        }
-      };
-    </script>
   </body>
 </html>

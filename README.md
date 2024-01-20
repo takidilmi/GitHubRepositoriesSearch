@@ -16,6 +16,7 @@ You can view a live demo of the application [here](https://git-hub-repositories-
 - The application assumes that all GitHub users have a 'location' field. If this field is not present in the API response, or if the user did not provide their location, the application will display "Unknown" for that user's location.
 - The application assumes that all repositories have a 'languages_url' field and that this URL returns a list of languages used in the repository.
 - The application handles 404 errors by displaying a "Page Not Found" message and a countdown timer. After 5 seconds, the user is redirected to the homepage.
+- Last, the user can click the title "GitHub Repositories Search" to go back home.
 
 ## Installation
 1. Clone the repository to your local machine.
@@ -27,3 +28,4 @@ You can view a live demo of the application [here](https://git-hub-repositories-
 3. Use the pagination buttons to navigate through the pages.
 4. Use the "Repositories per page" dropdown to change the number of repositories displayed per page.
 5. Use the repository search bar to filter repositories by name.
+6. Click "GitHub Repositories Search" to go back home and clear the current user you were searching

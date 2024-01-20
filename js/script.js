@@ -56,6 +56,7 @@ function displayUser(user) {
   </div>
 </div>
   `;
+  document.getElementById("perPageDiv").style.display = "flex";
 }
 // Manipulating the DOM to display the repository data
 function displayRepos(repos, totalRepos) {

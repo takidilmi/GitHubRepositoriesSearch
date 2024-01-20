@@ -1,7 +1,10 @@
-.select-position {
+.select-positon {
   position: fixed;
   bottom: 10px;
   right: 10px;
+}
+.self{
+  align-self: center;
 }
 #loader {
   margin-top: 20px;
